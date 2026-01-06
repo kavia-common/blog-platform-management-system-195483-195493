@@ -1,8 +1,20 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import { AuthProvider } from "./contexts/AuthContext";
+import { PostsProvider } from "./contexts/PostsContext";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("renders app brand", () => {
+  render(
+    <BrowserRouter>
+      <AuthProvider>
+        <PostsProvider>
+          <App />
+        </PostsProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  );
+
+  const brand = screen.getByLabelText(/go to home/i);
+  expect(brand).toBeInTheDocument();
 });
